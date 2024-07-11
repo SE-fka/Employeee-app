@@ -1,6 +1,6 @@
 [build]
   command = "ng build"
-  publish = "dist/employee-management"
+  publish = "dist/employee-management/browser"
   functions = "functions"
 
 [[redirects]]
