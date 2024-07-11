@@ -1,9 +1,0 @@
-[build]
-  command = "ng build"
-  publish = "dist/employee-management/browser"
-  functions = "functions"
-
-[[redirects]]
-  from = "/.netlify/functions/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
