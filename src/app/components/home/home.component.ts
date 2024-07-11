@@ -1,8 +1,14 @@
-import { Component, Input, OnInit, Type } from '@angular/core';
+import { Component, ViewChild, OnInit, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { HttpProviderService } from '../service/http-provider.service';
+import { EmployeeService } from '../../service/employee.service';
+
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'ng-modal-confirm',
@@ -22,6 +28,7 @@ import { HttpProviderService } from '../service/http-provider.service';
   </div>
   `,
 })
+//NG modal confirmation
 export class NgModalConfirm {
   constructor(public modal: NgbActiveModal) { }
 }
@@ -36,33 +43,52 @@ const MODALS: { [name: string]: Type<any> } = {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  closeResult = '';
-  employeeList: any = [];
-  constructor(private router: Router, private modalService: NgbModal,
-    private toastr: ToastrService, private httpProvider : HttpProviderService) { }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit(): void {
+  employeeList: any = [];
+  dataSource: any = [];
+  displayedColumns: string[] = ['sno', 'id', 'name', 'email', 'phone', 'department', 'position', 'actions'];
+  
+  constructor(
+    private router: Router, private modalService: NgbModal,
+    private toastr: ToastrService, private httpProvider: EmployeeService
+  ) {
+    this.paginator = null!;
+    this.sort = null!; 
+  }
+
+  ngOnInit() {
     this.getAllEmployee();
   }
 
   async getAllEmployee() {
-    this.httpProvider.getAllEmployee().subscribe((data : any) => {
-      if (data != null && data.body != null) {
-        var resultData = data.body;
-        if (resultData) {
-          this.employeeList = resultData;
+    this.httpProvider.getAllEmployee().subscribe(
+      (data: any[]) => {
+        if (data != null) {
+          this.employeeList = data;
+          this.dataSource = new MatTableDataSource(this.employeeList);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else {
+          this.toastr.success('No data found');
+        }
+      },
+      (error: any) => {
+        if (error) {
+          if (error.status === 404) {
+            this.toastr.error('Employee not found. Please try again later.');
+          } else if (error.status === 500) {
+            this.toastr.error('An error occurred on the server. Please try again later.');
+          } else {
+            this.toastr.error('An APIs error occurred. Please try again later.');
+          }
+          setTimeout(() => {
+            this.router.navigate(['/Home']);
+          }, 500);
         }
       }
-    },
-    (error : any)=> {
-        if (error) {
-          if (error.status == 404) {
-            if(error.error && error.error.message){
-              this.employeeList = [];
-            }
-          }
-        }
-      });
+    );
   }
 
   AddEmployee() {
@@ -73,22 +99,53 @@ export class HomeComponent implements OnInit {
     this.modalService.open(MODALS['deleteModal'],
       {
         ariaLabelledBy: 'modal-basic-title'
-      }).result.then((result) => {
+      }).result.then(() => {
         this.deleteEmployee(employee);
       },
-        (reason) => {});
+      () => { });
   }
 
   deleteEmployee(employee: any) {
-    this.httpProvider.deleteEmployeeById(employee.id).subscribe((data : any) => {
-      if (data != null && data.body != null) {
-        var resultData = data.body;
-        if (resultData != null && resultData.isSuccess) {
-          this.toastr.success(resultData.message);
+    this.httpProvider.deleteEmployee(employee.id).subscribe((data: any) => {
+      if (data != null) {
+        var resultData = data;
+        if (resultData != null) {
+          this.toastr.success("Delete Employee Success");
           this.getAllEmployee();
         }
       }
     },
-    (error : any) => {});
+    () => { });
   }
+
+  //Search and Fliter 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  //Export xlsx
+  exportToExcel(data: any[], filename: string = 'export.xlsx') {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    XLSX.writeFile(workbook, filename);
+  }
+
+   //Export csv
+  exportToCSV(data: any[], filename: string = 'export.csv') {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const csvData = XLSX.utils.sheet_to_csv(worksheet);
+    this.downloadCSV(csvData, filename);
+  }
+  
+  downloadCSV(csvData: string, filename: string): void {
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 }

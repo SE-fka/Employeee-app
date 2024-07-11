@@ -1,0 +1,157 @@
+{
+  "employees": [
+    {
+      "id": "bff1",
+      "emp_Id": "Emp01",
+      "name": "Befikadu",
+      "email": "fka@gmail.com",
+      "phone": "0962575676",
+      "department": "Software Engineering",
+      "position": "Developer"
+    },
+    {
+      "id": "f352",
+      "emp_Id": "em0345",
+      "name": "test",
+      "email": "fka@gmail.com",
+      "phone": "0962575676",
+      "department": "IT",
+      "position": "Software Engineer"
+    },
+    {
+      "id": "12q",
+      "emp_Id": "123",
+      "name": "Befikadu",
+      "email": "fka@gmail.com",
+      "phone": "0962575678",
+      "department": "Mark",
+      "position": "Expert"
+    },
+    {
+      "id": "3aa4",
+      "emp_Id": "em032",
+      "name": "we",
+      "email": "fkadev66@gmail.com",
+      "phone": "0962575676",
+      "department": "Marketing",
+      "position": "Expert"
+    },
+    {
+      "id": "a4a1",
+      "emp_Id": "em031",
+      "name": "Fikadu",
+      "email": "fka@gmail.com",
+      "phone": "0962575676",
+      "department": "SE",
+      "position": "Expert"
+    },
+    {
+      "id": "123",
+      "emp_Id": "em05",
+      "name": "John Doe",
+      "email": "john.doe@company.com",
+      "phone": "5558881235",
+      "department": "Sales",
+      "position": "Manager"
+    },
+    {
+      "id": "456",
+      "emp_Id": "em02",
+      "name": "Jane Smith",
+      "email": "jane.smeith@company.com",
+      "phone": "5550775677",
+      "department": "Markting",
+      "position": "Specilist"
+    },
+    {
+      "id": "789",
+      "emp_Id": "em03",
+      "name": "Bob Johnson",
+      "email": "bob.johnson@company.com",
+      "phone": "555-9012",
+      "department": "IT",
+      "position": "Technician"
+    },
+    {
+      "id": "f3e5",
+      "emp_Id": "em0546",
+      "name": "test",
+      "email": "fka@gmail.com",
+      "phone": "0962575676",
+      "department": "IT",
+      "position": "Software Engineer"
+    },
+    {
+      "id": "12",
+      "emp_Id": "wet",
+      "name": "John Doe",
+      "email": "john.doe@company.com",
+      "phone": "555-1234",
+      "department": "Sales",
+      "position": "Manager"
+    },
+    {
+      "id": "46",
+      "emp_Id": "em083",
+      "name": "Jane Smith",
+      "email": "jane.smith@company.com",
+      "phone": "5550775678",
+      "department": "Marketing",
+      "position": "Specialist"
+    },
+    {
+      "id": "78",
+      "emp_Id": "em023",
+      "name": "Bob Johnson",
+      "email": "bob.johnson@company.com",
+      "phone": "555-9012",
+      "department": "IT",
+      "position": "Technician"
+    },
+    {
+      "id": "f35",
+      "emp_Id": "em0366",
+      "name": "test",
+      "email": "fka@gmail.com",
+      "phone": "0962575676",
+      "department": "IT",
+      "position": "Software Engineer"
+    },
+    {
+      "id": "1w23",
+      "emp_Id": "em073",
+      "name": "John Doe",
+      "email": "john.doe@company.com",
+      "phone": "555-1234",
+      "department": "Sales",
+      "position": "Manager"
+    },
+    {
+      "id": "152",
+      "emp_Id": "em032",
+      "name": "John Doe",
+      "email": "john.doe@company.com",
+      "phone": "555-1234",
+      "department": "Sales",
+      "position": "Manager"
+    },
+    {
+      "id": "465",
+      "emp_Id": "em0311",
+      "name": "Jane Smith",
+      "email": "jane.smith@company.com",
+      "phone": "5550775678",
+      "department": "Marketing",
+      "position": "Specialist"
+    },
+    {
+      "id": "781",
+      "emp_Id": "em034",
+      "name": "Bob Johnson",
+      "email": "bob.johnson@company.com",
+      "phone": "555-9012",
+      "department": "IT",
+      "position": "Technician"
+    }
+  ]
+}
