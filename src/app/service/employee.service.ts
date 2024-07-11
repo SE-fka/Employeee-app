@@ -9,9 +9,9 @@ import { SaveEmployeeResponse } from '../model//employee-response.model';
 })
 export class EmployeeService {
 
-  //private apiUrl = 'http://localhost:3000/employees';
+  private apiUrl = 'http://localhost:3000/employees';
 
-  private apiUrl = '/.netlify/functions/start-json-server/employees';
+  //private apiUrl = '/.netlify/functions/start-json-server/employees';
 
   constructor(private http: HttpClient) {}
 
