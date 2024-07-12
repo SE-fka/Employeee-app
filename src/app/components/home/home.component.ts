@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  isLoading: boolean = false;
   employeeList: any = [];
   dataSource: any = [];
   displayedColumns: string[] = ['sno', 'id', 'name', 'email', 'phone', 'department', 'position', 'actions'];
@@ -63,6 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   async getAllEmployee() {
+    this.isLoading = true;
     this.httpProvider.getAllEmployee().subscribe(
       (data: any[]) => {
         if (data != null) {
@@ -70,12 +72,15 @@ export class HomeComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.employeeList);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.isLoading = false;
         } else {
+          this.isLoading = false;
           this.toastr.success('No data found');
         }
       },
       (error: any) => {
         if (error) {
+          this.isLoading = false;
           if (error.status === 404) {
             this.toastr.error('Employee not found. Please try again later.');
           } else if (error.status === 500) {
